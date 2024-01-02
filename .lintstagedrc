@@ -1,0 +1,4 @@
+{
+  "src/**/*.(ts|tsx)": ["bash -c 'npm run ts-check'", "eslint --cache --fix", "prettier -w"],
+  "*.md": "prettier -w"
+}
