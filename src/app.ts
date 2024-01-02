@@ -5,8 +5,8 @@ const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 
 app.use(middlewares);
-app.use(router);
+app.use('/api', router);
 
 app.listen(3000, () => {
-  console.log('JSON Server is running');
+  console.log('Server is running');
 });
