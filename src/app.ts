@@ -1,15 +1,31 @@
 import url from 'url';
 import path from 'path';
-import jsonServer from 'json-server';
+import server from 'json-server';
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const dbPath = path.join(dirname, 'db.json');
+import db from './db.json';
 
-export const app = jsonServer.create();
-const router = jsonServer.router(dbPath);
-const middlewares = jsonServer.defaults();
+export const app = server.create();
+const router = server.router(dbPath);
 
-app.use(middlewares);
+app.get('/api/categories', (req, res) => {
+  const result = db.categories?.map(category => {
+    const filtered = db.wishes?.filter(wish => wish.categoryId === category.id);
+    const wishes = filtered?.map(wish => {
+      return {
+        ...wish,
+        currency: db.currencies?.find(currency => currency.id === wish.currencyId)?.symbol,
+        price: db.prices?.filter(price => price.wishId === wish.id).map(price => price.value),
+      };
+    });
+
+    return { ...category, wishes };
+  });
+
+  res.jsonp(result);
+});
+
 app.use('/api', router);
 
 app.listen(3000, () => {
