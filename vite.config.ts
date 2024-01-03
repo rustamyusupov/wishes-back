@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { VitePluginNode } from 'vite-plugin-node';
 
 export default defineConfig({
-  base: '/wishes/api',
+  base: '/api',
   server: {
     port: 3000,
   },

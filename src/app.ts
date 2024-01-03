@@ -9,7 +9,7 @@ import db from './db.json';
 export const app = server.create();
 const router = server.router(dbPath);
 
-app.get('/wishes/api/categories', (req, res) => {
+app.get('/api/categories', (req, res) => {
   const result = db.categories?.map(category => {
     const filtered = db.wishes?.filter(wish => wish.categoryId === category.id);
     const wishes = filtered?.map(wish => {
@@ -26,7 +26,7 @@ app.get('/wishes/api/categories', (req, res) => {
   res.jsonp(result);
 });
 
-app.use('/wishes/api', router);
+app.use('/api', router);
 
 app.listen(3000, () => {
   console.log('Server is running');
