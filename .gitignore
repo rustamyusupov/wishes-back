@@ -12,7 +12,6 @@ dist
 dist-ssr
 *.local
 .eslintcache
-db.json
 
 # Editor directories and files
 .vscode/*
