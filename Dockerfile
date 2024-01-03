@@ -10,4 +10,6 @@ COPY package-lock.json ./
 RUN npm install --legacy-peer-deps
 RUN npm run build
 
-CMD [ "node", "dist/app.js" ]
+EXPOSE 3000
+
+CMD [ "node", "./dist/app.js" ]

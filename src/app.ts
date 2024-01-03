@@ -2,12 +2,16 @@ import url from 'url';
 import path from 'path';
 import server from 'json-server';
 
+import db from './db.json';
+
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const dbPath = path.join(dirname, 'db.json');
-import db from './db.json';
 
 export const app = server.create();
 const router = server.router(dbPath);
+const middlewares = server.defaults();
+
+app.use(middlewares);
 
 app.get('/api/categories', (req, res) => {
   const result = db.categories?.map(category => {
