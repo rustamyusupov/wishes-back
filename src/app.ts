@@ -19,8 +19,8 @@ app.get('/api/categories', (req, res) => {
     const wishes = filtered?.map(wish => {
       return {
         ...wish,
-        currency: db.currencies?.find(currency => currency.id === wish.currencyId)?.symbol,
-        price: db.prices?.filter(price => price.wishId === wish.id).map(price => price.value),
+        currency: db.currencies?.find(currency => currency.id === wish.currencyId)?.name,
+        prices: db.prices?.filter(price => price.wishId === wish.id).map(price => price.value),
       };
     });
 
