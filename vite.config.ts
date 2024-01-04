@@ -4,7 +4,7 @@ import { VitePluginNode } from 'vite-plugin-node';
 export default defineConfig({
   base: '/api',
   server: {
-    port: 3000,
+    port: 9000,
   },
   plugins: [
     ...VitePluginNode({

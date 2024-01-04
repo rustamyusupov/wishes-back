@@ -12,6 +12,6 @@ RUN npm run build
 
 COPY src/db.json ./dist/db.json
 
-EXPOSE 3000
+EXPOSE 9000
 
 CMD [ "node", "./dist/app.js" ]

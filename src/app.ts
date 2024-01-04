@@ -32,6 +32,6 @@ app.get('/api/categories', (req, res) => {
 
 app.use('/api', router);
 
-app.listen(3000, () => {
+app.listen(9000, () => {
   console.log('Server is running');
 });
