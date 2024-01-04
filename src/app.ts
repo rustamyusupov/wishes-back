@@ -13,7 +13,7 @@ const middlewares = server.defaults();
 
 app.use(middlewares);
 
-app.get('/api/categories', (req, res) => {
+app.get('/api/list', (req, res) => {
   const result = db.categories?.map(category => {
     const filtered = db.wishes?.filter(wish => wish.categoryId === category.id);
     const wishes = filtered?.map(wish => {
