@@ -13,6 +13,44 @@ const middlewares = server.defaults();
 app.use(middlewares);
 app.use(server.bodyParser);
 
+const getList = (req: Request, res: Response) => {
+  const db = router.db;
+  const categories = db.get('categories');
+  const currencies = db.get('currencies');
+  const prices = db.get('prices');
+  const wishes = db.get('wishes');
+
+  // TODO refactor, use lodash
+  const result = categories
+    // @ts-expect-error should be fixed
+    ?.map(category => {
+      const prepared = wishes
+        // @ts-expect-error should be fixed
+        ?.filter(wish => wish.categoryId === category.id)
+        // @ts-expect-error should be fixed
+        .sort((a, b) => a.sort - b.sort);
+
+      return {
+        ...category,
+        wishes: prepared
+          // @ts-expect-error should be fixed
+          ?.map(wish => ({
+            ...wish,
+            // @ts-expect-error should be fixed
+            currency: currencies?.find({ id: wish.currencyId })?.value()?.name,
+            // @ts-expect-error should be fixed
+            price: prices?.findLast({ wishId: wish.id })?.value()?.value,
+          }))
+          .value(),
+      };
+    })
+    // @ts-expect-error should be fixed
+    ?.filter(category => category.wishes.length > 0);
+
+  res.status(200).jsonp(result);
+  return;
+};
+
 const addWish = (req: Request, res: Response) => {
   const db = router.db;
   const wishes = db.get('wishes');
@@ -30,7 +68,6 @@ const addWish = (req: Request, res: Response) => {
       id: wishId,
       link,
       name,
-      price: Number(price),
       sort: Number(sort) ?? 0,
       userId: Number(user),
     })
@@ -67,7 +104,6 @@ const updateWish = (req: Request, res: Response) => {
       currencyId: Number(currencyId),
       link,
       name,
-      price: Number(price),
       sort: Number(sort) ?? 0,
       userId: Number(user),
     })
@@ -91,6 +127,7 @@ const updateWish = (req: Request, res: Response) => {
   return;
 };
 
+app.get('/api/wishlist', getList);
 app.post('/api/wishes', addWish);
 app.put('/api/wishes/:id', updateWish);
 app.use('/api', router);
