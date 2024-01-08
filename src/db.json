@@ -44,7 +44,6 @@
     {
       "name": "Ninja BL610 Professional Blender",
       "link": "https://www.amazon.com/Ninja-Professional-Countertop-Technology-BL610/dp/B00NGV4506",
-      "price": 54.34,
       "sort": 0,
       "currencyId": 0,
       "categoryId": 0,
@@ -55,7 +54,6 @@
     {
       "name": "Shimano 105 HG601 Quick Link Chain",
       "link": "https://www.tradeinn.com/bikeinn/en/shimano-105-hg601-quick-link-chain/137973536/p",
-      "price": 27.99,
       "sort": 0,
       "currencyId": 1,
       "categoryId": 0,
@@ -66,22 +64,20 @@
     {
       "name": "Мужская Джерси Progress, Size: M",
       "link": "https://veter.cc/store/tproduct/494955126-465043826601-muzhskaya-dzhersi-progress",
-      "price": 9990,
       "sort": 1,
       "currencyId": 2,
       "categoryId": 1,
-      "userId": "0",
+      "userId": 0,
       "archive": false,
       "id": 3
     },
     {
       "name": "Мужские Велотрусы Progress, Size: S",
       "link": "https://veter.cc/store/tproduct/494955126-550238227031-muzhskie-velotrusi-progress",
-      "price": 14990,
       "sort": 1,
       "currencyId": 2,
       "categoryId": 1,
-      "userId": "0",
+      "userId": 0,
       "archive": false,
       "id": 4
     }
@@ -103,6 +99,12 @@
       "id": 3,
       "wishId": 3,
       "value": 9990,
+      "date": "02.01.2024"
+    },
+    {
+      "id": 4,
+      "wishId": 4,
+      "value": 14990,
       "date": "02.01.2024"
     }
   ]
