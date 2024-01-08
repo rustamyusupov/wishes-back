@@ -53,6 +53,7 @@ const getList = (req: Request, res: Response) => {
 
 const addWish = (req: Request, res: Response) => {
   const db = router.db;
+  const users = db.get('users');
   const wishes = db.get('wishes');
   const prices = db.get('prices');
   const { archive, categoryId, currencyId, link, name, price, sort, user } = req.body;
@@ -69,7 +70,8 @@ const addWish = (req: Request, res: Response) => {
       link,
       name,
       sort: Number(sort) ?? 0,
-      userId: Number(user),
+      // @ts-expect-error should be fixed
+      userId: users.find({ name: user })?.value()?.id,
     })
     .write();
 
@@ -90,6 +92,7 @@ const addWish = (req: Request, res: Response) => {
 
 const updateWish = (req: Request, res: Response) => {
   const db = router.db;
+  const users = db.get('users');
   const wishes = db.get('wishes');
   const prices = db.get('prices');
   const wishId = Number(req.params.id);
@@ -105,7 +108,8 @@ const updateWish = (req: Request, res: Response) => {
       link,
       name,
       sort: Number(sort) ?? 0,
-      userId: Number(user),
+      // @ts-expect-error should be fixed
+      userId: users.find({ name: user })?.value()?.id,
     })
     .write();
 
