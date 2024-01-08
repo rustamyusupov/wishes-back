@@ -4,14 +4,17 @@
     "baseUrl": "./src",
     "declaration": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["ESNext"],
     "module": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "esnext"
   },
+  "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }
