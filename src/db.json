@@ -1,67 +1,109 @@
 {
-  "categories": [
-    { "id": 0, "name": "Devices" },
-    { "id": 1, "name": "Equipment" },
-    { "id": 2, "name": "Clothes" }
-  ],
-  "currencies": [
-    { "id": 0, "name": "USD", "symbol": "$" },
-    { "id": 1, "name": "EUR", "symbol": "€" },
-    { "id": 2, "name": "RUB", "symbol": "₽" }
-  ],
-  "wishes": [
+  "users": [
     {
       "id": 0,
-      "name": "Ninja BL610 Professional Blender",
-      "link": "https://www.amazon.com/Ninja-Professional-Countertop-Technology-BL610/dp/B00NGV4506",
-      "sort": 0,
-      "archive": false,
-      "categoryId": 0,
-      "currencyId": 0
+      "name": "rstm"
     },
     {
       "id": 1,
-      "name": "Oakley Radar Path Prizm Sunglasses",
-      "link": "https://www.tradeinn.com/bikeinn/en/oakley-radar-path-prizm-sunglasses/136265845/p",
-      "sort": 0,
-      "archive": false,
-      "categoryId": 1,
-      "currencyId": 1
+      "name": "nadushka"
+    }
+  ],
+  "categories": [
+    {
+      "id": 0,
+      "name": "Devices"
+    },
+    {
+      "id": 1,
+      "name": "Equipment"
     },
     {
       "id": 2,
+      "name": "Clothes"
+    }
+  ],
+  "currencies": [
+    {
+      "id": 0,
+      "name": "USD",
+      "symbol": "$"
+    },
+    {
+      "id": 1,
+      "name": "EUR",
+      "symbol": "€"
+    },
+    {
+      "id": 2,
+      "name": "RUB",
+      "symbol": "₽"
+    }
+  ],
+  "wishes": [
+    {
+      "name": "Ninja BL610 Professional Blender",
+      "link": "https://www.amazon.com/Ninja-Professional-Countertop-Technology-BL610/dp/B00NGV4506",
+      "price": 54.34,
+      "sort": 0,
+      "currencyId": 0,
+      "categoryId": 0,
+      "archive": false,
+      "id": 0,
+      "userId": 0
+    },
+    {
       "name": "Shimano 105 HG601 Quick Link Chain",
       "link": "https://www.tradeinn.com/bikeinn/en/shimano-105-hg601-quick-link-chain/137973536/p",
-      "sort": 1,
-      "archive": false,
+      "price": 27.99,
+      "sort": 0,
+      "currencyId": 1,
       "categoryId": 0,
-      "currencyId": 1
+      "id": 2,
+      "userId": 0,
+      "archive": false
     },
     {
-      "id": 3,
       "name": "Мужская Джерси Progress, Size: M",
       "link": "https://veter.cc/store/tproduct/494955126-465043826601-muzhskaya-dzhersi-progress",
-      "sort": 2,
-      "archive": false,
+      "price": 9990,
+      "sort": 1,
+      "currencyId": 2,
       "categoryId": 1,
-      "currencyId": 2
+      "userId": "0",
+      "archive": false,
+      "id": 3
     },
     {
-      "id": 4,
       "name": "Мужские Велотрусы Progress, Size: S",
       "link": "https://veter.cc/store/tproduct/494955126-550238227031-muzhskie-velotrusi-progress",
-      "sort": 3,
-      "archive": false,
+      "price": 14990,
+      "sort": 1,
+      "currencyId": 2,
       "categoryId": 1,
-      "currencyId": 2
+      "userId": "0",
+      "archive": false,
+      "id": 4
     }
   ],
   "prices": [
-    { "id": 0, "wishId": 0, "value": 54.34, "date": "02.01.2024" },
-    { "id": 1, "wishId": 1, "value": 147.99, "date": "02.01.2024" },
-    { "id": 2, "wishId": 2, "value": 27.99, "date": "02.01.2024" },
-    { "id": 3, "wishId": 3, "value": 9990, "date": "02.01.2024" },
-    { "id": 4, "wishId": 4, "value": 14990, "date": "02.01.2024" },
-    { "id": 5, "wishId": 2, "value": 26.99, "date": "03.01.2024" }
+    {
+      "id": 0,
+      "wishId": 0,
+      "value": 54.34,
+      "date": "02.01.2024"
+    },
+    {
+      "id": 2,
+      "wishId": 2,
+      "value": 27.99,
+      "date": "02.01.2024"
+    },
+    {
+      "id": 3,
+      "wishId": 3,
+      "value": 9990,
+      "date": "02.01.2024"
+    }
   ]
 }
