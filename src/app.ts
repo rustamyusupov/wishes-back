@@ -15,16 +15,26 @@ app.use(server.bodyParser);
 
 const getList = (req: Request, res: Response) => {
   const db = router.db;
+  const users = db.get('users');
   const categories = db.get('categories');
   const currencies = db.get('currencies');
   const prices = db.get('prices');
   const wishes = db.get('wishes');
+  // @ts-expect-error should be fixed
+  const userId = users.find({ name: req.query.user })?.value()?.id;
+
+  if (userId === undefined) {
+    res.status(404).jsonp([]);
+    return;
+  }
 
   // TODO refactor, use lodash
   const result = categories
     // @ts-expect-error should be fixed
     ?.map(category => {
       const prepared = wishes
+        // @ts-expect-error should be fixed
+        ?.filter({ userId })
         // @ts-expect-error should be fixed
         ?.filter(wish => wish.categoryId === category.id)
         // @ts-expect-error should be fixed
