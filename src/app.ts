@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import url from 'url';
 import path from 'path';
 import server from 'json-server';
+import auth from 'json-server-auth';
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const dbPath = path.join(dirname, 'db.json');
@@ -9,9 +10,6 @@ const dbPath = path.join(dirname, 'db.json');
 export const app = server.create();
 const router = server.router(dbPath);
 const middlewares = server.defaults();
-
-app.use(middlewares);
-app.use(server.bodyParser);
 
 const getList = (req: Request, res: Response) => {
   const db = router.db;
@@ -21,7 +19,7 @@ const getList = (req: Request, res: Response) => {
   const prices = db.get('prices');
   const wishes = db.get('wishes');
   // @ts-expect-error should be fixed
-  const userId = users.find({ name: req.query.user })?.value()?.id;
+  const userId = users.find({ login: req.query.user })?.value()?.id;
 
   if (userId === undefined) {
     res.status(404).jsonp([]);
@@ -141,9 +139,32 @@ const updateWish = (req: Request, res: Response) => {
   return;
 };
 
+// https://github.com/jeremyben/json-server-auth?tab=readme-ov-file#guarded-routes-
+const rules = auth.rewriter({
+  // @ts-expect-error should be fixed
+  '/api/categories': '/444/api/categories',
+  // @ts-expect-error should be fixed
+  '/api/currencies': '/444/api/currencies',
+  // @ts-expect-error should be fixed
+  '/api/prices': '/600/api/prices',
+  // @ts-expect-error should be fixed
+  '/api/users': '/400/api/users',
+  // @ts-expect-error should be fixed
+  '/api/wishes*': '/640/api/wishes$1',
+  // @ts-expect-error should be fixed
+  '/api/wishlist': '/644/api/wishlist',
+});
+
+// @ts-expect-error should be fixed
+app.db = router.db;
+
+app.use(middlewares);
+app.use(server.bodyParser);
 app.get('/api/wishlist', getList);
-app.post('/api/wishes', addWish);
-app.put('/api/wishes/:id', updateWish);
+app.post('/wishes', addWish);
+app.put('/wishes/:id', updateWish);
+app.use(rules);
+app.use(auth);
 app.use('/api', router);
 
 app.listen(9000, () => {
