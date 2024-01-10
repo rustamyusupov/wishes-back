@@ -1,10 +1,8 @@
-import express from 'express';
+import { Router } from 'express';
 
 import { addWish, deleteWish, getWish, getWishes, updateWish } from '../controllers';
 
-const router = express.Router();
-
-export const wishes = () => {
+export const wishes = (router: Router) => {
   router.get('/wishes', getWishes);
   router.get('/wishes/:id', getWish);
   router.post('/wishes', addWish);
