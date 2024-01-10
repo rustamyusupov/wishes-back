@@ -61,10 +61,9 @@ const getList = (req: Request, res: Response) => {
 
 const addWish = (req: Request, res: Response) => {
   const db = router.db;
-  const users = db.get('users');
   const wishes = db.get('wishes');
   const prices = db.get('prices');
-  const { archive, categoryId, currencyId, link, name, price, sort, user } = req.body;
+  const { archive, categoryId, currencyId, link, name, price, sort, userId } = req.body;
   // @ts-expect-error should be fixed
   const wishId = (wishes.last()?.value()?.id || 0) + 1;
 
@@ -78,8 +77,7 @@ const addWish = (req: Request, res: Response) => {
       link,
       name,
       sort: Number(sort) ?? 0,
-      // @ts-expect-error should be fixed
-      userId: users.find({ name: user })?.value()?.id,
+      userId: Number(userId),
     })
     .write();
 
@@ -100,13 +98,12 @@ const addWish = (req: Request, res: Response) => {
 
 const updateWish = (req: Request, res: Response) => {
   const db = router.db;
-  const users = db.get('users');
   const wishes = db.get('wishes');
   const prices = db.get('prices');
   const wishId = Number(req.params.id);
   // @ts-expect-error should be fixed
   const wish = wishes.find({ id: wishId });
-  const { archive, categoryId, currencyId, link, name, price, sort, user } = req.body;
+  const { archive, categoryId, currencyId, link, name, price, sort, userId } = req.body;
 
   const response = wish
     ?.assign({
@@ -116,8 +113,7 @@ const updateWish = (req: Request, res: Response) => {
       link,
       name,
       sort: Number(sort) ?? 0,
-      // @ts-expect-error should be fixed
-      userId: users.find({ name: user })?.value()?.id,
+      userId: Number(userId),
     })
     .write();
 
@@ -150,7 +146,9 @@ const rules = auth.rewriter({
   // @ts-expect-error should be fixed
   '/api/users': '/400/api/users',
   // @ts-expect-error should be fixed
-  '/api/wishes*': '/640/api/wishes$1',
+  '/api/wishes': '/640/api/wishes',
+  // @ts-expect-error should be fixed
+  '/api/wishes/:id': '/660/api/wishes/:id',
   // @ts-expect-error should be fixed
   '/api/wishlist': '/644/api/wishlist',
 });
@@ -161,8 +159,8 @@ app.db = router.db;
 app.use(middlewares);
 app.use(server.bodyParser);
 app.get('/api/wishlist', getList);
-app.post('/wishes', addWish);
-app.put('/wishes/:id', updateWish);
+app.post('/api/wishes', addWish);
+app.put('/api/wishes/:id', updateWish);
 app.use(rules);
 app.use(auth);
 app.use('/api', router);
