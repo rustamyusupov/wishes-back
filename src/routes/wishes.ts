@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { addWish, deleteWish, getWish, getWishes, updateWish } from 'controllers';
 
-export const wishes = (router: Router) => {
+export const getWishesRouter = (router: Router) => {
   router.get('/wishes', getWishes);
   router.get('/wishes/:id', getWish);
   router.post('/wishes', addWish);

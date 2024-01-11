@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Request, Response } from 'express';
 
-import { getData } from 'models';
-
 export const getWishes = async (req: Request, res: Response) => {
-  const { wishes } = await getData();
-
-  res.status(200).send(wishes);
+  res.status(200).send(res.locals.models.wishes);
 };
 
 export const getWish = async (req: Request, res: Response) => {
-  const { wishes } = await getData();
-  const wish = wishes.find(({ id }) => id === Number(req.params.id));
+  const wish = res.locals.models.wishes.find(
+    ({ id }: { id: number }) => id === Number(req.params.id)
+  );
 
   res.status(200).send(wish);
 };

@@ -1,12 +1,15 @@
 import http from 'http';
 import express from 'express';
 
+import { models } from 'middlewares';
 import routes from 'routes';
 
 export const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(models);
+
 app.use('/api', routes);
 
 const server = http.createServer(app);

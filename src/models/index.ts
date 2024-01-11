@@ -2,7 +2,7 @@ import url from 'url';
 import path from 'path';
 import { JSONFilePreset } from 'lowdb/node';
 
-import { Data } from './types';
+import { Data } from 'types';
 import { defaultData } from './constants';
 
 export const getData = async () => {
