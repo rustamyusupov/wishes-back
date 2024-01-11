@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Request, Response } from 'express';
 
-import { getData } from '../models';
+import { getData } from 'models';
 
 export const getWishes = async (req: Request, res: Response) => {
   const { wishes } = await getData();

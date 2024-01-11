@@ -7,7 +7,7 @@ import { defaultData } from './constants';
 
 export const getData = async () => {
   const dirname = path.dirname(url.fileURLToPath(import.meta.url));
-  const dbPath = path.join(dirname, '..', 'db.json');
+  const dbPath = path.join(dirname, 'db.json');
   const db = await JSONFilePreset<Data>(dbPath, defaultData);
 
   return db.data;

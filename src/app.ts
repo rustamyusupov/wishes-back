@@ -1,7 +1,7 @@
 import http from 'http';
 import express from 'express';
 
-import routes from './routes';
+import routes from 'routes';
 
 export const app = express();
 

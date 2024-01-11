@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { addWish, deleteWish, getWish, getWishes, updateWish } from '../controllers';
+import { addWish, deleteWish, getWish, getWishes, updateWish } from 'controllers';
 
 export const wishes = (router: Router) => {
   router.get('/wishes', getWishes);
