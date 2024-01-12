@@ -28,12 +28,10 @@ export interface Price {
 }
 
 export interface User {
-  accessToken: string;
-  user: {
-    id: number;
-    login: string;
-    email: string;
-  };
+  id: number;
+  login: string;
+  email: string;
+  password: string;
 }
 
 export interface Data {

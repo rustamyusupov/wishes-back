@@ -2,7 +2,7 @@ import 'express';
 
 import { Data } from './types';
 
-declare module 'express' {
+declare module Express {
   export interface Response {
     locals: {
       models?: Data;

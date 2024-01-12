@@ -1,13 +1,12 @@
 import express from 'express';
 
-import { addWish, deleteWish, getWish, getWishes, updateWish } from 'controllers';
+import { wishes } from 'controllers';
+import { auth } from 'middlewares';
 
-const routes = express.Router();
+export const routes = express.Router();
 
-routes.get('/', getWishes);
-routes.get('/:id', getWish);
-routes.post('/', addWish);
-routes.put('/:id', updateWish);
-routes.delete('/:id', deleteWish);
-
-export const wishes = routes;
+routes.get('/', wishes.getAll);
+routes.get('/:id', auth, wishes.get);
+routes.post('/', auth, wishes.add);
+routes.put('/:id', auth, wishes.update);
+routes.delete('/:id', auth, wishes.remove);
