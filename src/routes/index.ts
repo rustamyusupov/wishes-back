@@ -1,10 +1,8 @@
 import express from 'express';
 
-import { getWishesRouter } from './wishes';
+import { wishes } from './wishes';
 
-const router = express.Router();
+export const routes = express.Router();
 
-router.use('/wishes', getWishesRouter(router));
-router.use('*', (req, res) => res.redirect('/'));
-
-export default router;
+routes.use('/wishes', wishes);
+routes.use('*', (req, res) => res.redirect('/'));

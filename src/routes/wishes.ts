@@ -1,13 +1,13 @@
-import { Router } from 'express';
+import express from 'express';
 
 import { addWish, deleteWish, getWish, getWishes, updateWish } from 'controllers';
 
-export const getWishesRouter = (router: Router) => {
-  router.get('/wishes', getWishes);
-  router.get('/wishes/:id', getWish);
-  router.post('/wishes', addWish);
-  router.put('/wishes/:id', updateWish);
-  router.delete('/wishes/:id', deleteWish);
+const routes = express.Router();
 
-  return router;
-};
+routes.get('/', getWishes);
+routes.get('/:id', getWish);
+routes.post('/', addWish);
+routes.put('/:id', updateWish);
+routes.delete('/:id', deleteWish);
+
+export const wishes = routes;
