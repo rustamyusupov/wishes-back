@@ -6,6 +6,7 @@ import { auth } from 'middlewares';
 export const routes = express.Router();
 
 routes.get('/', wishes.getAll);
+routes.get('/list', wishes.getList);
 routes.get('/:id', auth, wishes.get);
 routes.post('/', auth, wishes.add);
 routes.put('/:id', auth, wishes.update);
