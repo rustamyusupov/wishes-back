@@ -18,6 +18,7 @@ export interface Wish {
   name: string;
   price: number;
   sort: number;
+  userId: User['id'];
 }
 
 export interface Price {
@@ -40,4 +41,8 @@ export interface Data {
   wishes: Wish[];
   prices: Price[];
   users: User[];
+}
+
+export interface CategoryWithWishes extends Category {
+  wishes: Wish[];
 }
