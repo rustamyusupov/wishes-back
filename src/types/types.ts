@@ -1,10 +1,10 @@
 export interface Category {
-  id: string;
+  id: number;
   name: string;
 }
 
 export interface Currency {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -12,7 +12,7 @@ export interface Wish {
   archive: boolean;
   categoryId: Category['id'];
   currencyId: Currency['id'];
-  id: string;
+  id: number;
   link: string;
   name: string;
   sort: number;
@@ -20,14 +20,14 @@ export interface Wish {
 }
 
 export interface Price {
-  id: string;
+  id: number;
   wishId: Wish['id'];
   value: number;
   date: string;
 }
 
 export interface User {
-  id: string;
+  id: number;
   login: string;
   email: string;
   password: string;
