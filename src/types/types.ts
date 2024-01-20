@@ -1,35 +1,33 @@
 export interface Category {
-  id: number;
+  id: string;
   name: string;
 }
 
 export interface Currency {
-  id: number;
+  id: string;
   name: string;
 }
 
 export interface Wish {
   archive: boolean;
   categoryId: Category['id'];
-  currency: Currency['name'];
   currencyId: Currency['id'];
-  id: number;
+  id: string;
   link: string;
   name: string;
-  price: number;
   sort: number;
   userId: User['id'];
 }
 
 export interface Price {
-  id: number;
+  id: string;
   wishId: Wish['id'];
   value: number;
   date: string;
 }
 
 export interface User {
-  id: number;
+  id: string;
   login: string;
   email: string;
   password: string;

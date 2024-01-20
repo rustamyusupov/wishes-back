@@ -5,7 +5,7 @@ import { User } from 'types';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = res.locals.models.users.find((user: User) => user.email === email);
+  const user = res.locals.models.data.users.find((user: User) => user.email === email);
 
   if (bcrypt.compareSync(password, user?.password)) {
     req.session.user = user.id;

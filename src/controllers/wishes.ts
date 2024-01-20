@@ -1,13 +1,13 @@
 import type { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-import { User, Category, Wish, Currency, Price, CategoryWithWishes } from 'types';
+import { User, Category, Wish, Currency, Price, CategoryWithWishes, Data } from 'types';
 
 export const getAll = async (req: Request, res: Response) => {
-  const { users, categories, wishes, currencies, prices } = res.locals.models;
+  const { users, categories, wishes, currencies, prices } = res.locals.models.data;
 
   if (req.query.user) {
-    const id = users.find(({ login }: { login: User['login'] }) => login === req.query.user)?.id;
+    const id = users.find((user: User) => user.login === req.query.user)?.id;
 
     const result = categories
       ?.map((category: Category) => {
@@ -35,36 +35,36 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 export const get = async (req: Request, res: Response) => {
-  const wish = res.locals.models.wishes.find(
-    ({ id }: { id: number }) => id === Number(req.params.id)
-  );
+  const wish = res.locals.models.data.wishes.find((wish: Wish) => wish.id === req.params.id);
 
   res.status(200).send(wish);
 };
 
 export const add = async (req: Request, res: Response) => {
   const id = uuidv4();
-  const { archive, categoryId, currencyId, link, name, price, sort, userId } = req.body;
+  const { archive, link, name, categoryId, currencyId, price, sort } = req.body;
+  const user = res.locals.models.data.users.find((user: User) => user.login === req.body.user);
+
   const wish = {
-    archive: Boolean(archive),
-    categoryId: Number(categoryId),
-    currencyId: Number(currencyId),
     id,
     link,
     name,
+    currencyId,
+    categoryId,
+    archive: Boolean(archive),
     sort: Number(sort) ?? 0,
-    userId: Number(userId),
+    userId: user.id,
   };
 
-  res.locals.models.wishes.push(wish).write();
-  res.locals.models.prices
-    .push({
-      date: new Date().toLocaleDateString('ru-RU'),
+  res.locals.models.update((data: Data) => {
+    data.wishes.push(wish);
+    data.prices.push({
       id: uuidv4(),
-      value: Number(price),
       wishId: id,
-    })
-    .write();
+      value: Number(price),
+      date: new Date().toLocaleDateString('ru-RU'),
+    });
+  });
 
   res.status(200).send(wish);
 };
