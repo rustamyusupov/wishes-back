@@ -106,5 +106,12 @@ export const update = async (req: Request, res: Response) => {
 };
 
 export const remove = async (req: Request, res: Response) => {
-  res.status(200).send('delete wish');
+  await res.locals.models.update((data: Data) => {
+    const id = Number(req.params.id);
+
+    data.wishes = data.wishes.filter((wish: Wish) => wish.id !== id);
+    data.prices = data.prices.filter((price: Price) => price.wishId !== id);
+  });
+
+  res.status(200).json({});
 };
