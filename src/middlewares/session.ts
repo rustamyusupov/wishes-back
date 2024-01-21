@@ -7,7 +7,7 @@ const config = {
     secure: import.meta.env.PROD,
   },
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   secret: 'keyboard cat',
 };
 
