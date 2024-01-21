@@ -2,8 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import http from 'http';
 
-import { models, session } from 'middlewares';
-import { routes } from 'routes';
+import { models, session } from './middlewares';
+import { routes } from './routes';
 
 export const app = express();
 const server = http.createServer(app);

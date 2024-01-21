@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 
-import { User } from 'types';
+import { User } from '../types';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;

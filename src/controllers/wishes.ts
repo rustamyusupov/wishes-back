@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import { User, Category, Wish, Currency, Price, CategoryWithWishes, Data } from 'types';
+import { User, Category, Wish, Currency, Price, CategoryWithWishes, Data } from '../types';
 
 export const getAll = async (req: Request, res: Response) => {
   const { users, categories, wishes, currencies, prices } = res.locals.models.data;

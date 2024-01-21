@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { wishes } from 'controllers';
-import { auth } from 'middlewares';
+import { wishes } from '../controllers';
+import { auth } from '../middlewares';
 
 export const routes = express.Router();
 

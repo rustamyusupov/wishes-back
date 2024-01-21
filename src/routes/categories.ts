@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { categories } from 'controllers';
+import { categories } from '../controllers';
 
 export const routes = express.Router();
 
