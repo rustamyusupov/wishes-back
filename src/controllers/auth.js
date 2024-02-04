@@ -1,11 +1,8 @@
-import type { Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
+const bcrypt = require('bcryptjs');
 
-import { User } from '../types';
-
-export const login = async (req: Request, res: Response) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = res.locals.models.data.users.find((user: User) => user.email === email);
+  const user = res.locals.models.data.users.find(user => user.email === email);
 
   if (bcrypt.compareSync(password, user?.password)) {
     req.session.user = user.id;
@@ -16,7 +13,7 @@ export const login = async (req: Request, res: Response) => {
   res.sendStatus(401);
 };
 
-export const logout = async (req: Request, res: Response) => {
+const logout = async (req, res) => {
   req.session.destroy(err => {
     if (err) {
       console.error(err);
@@ -25,3 +22,5 @@ export const logout = async (req: Request, res: Response) => {
 
   res.sendStatus(200);
 };
+
+module.exports = { login, logout };
