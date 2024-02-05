@@ -1,10 +1,12 @@
 const getAll = async (req, res) => {
-  const { users, categories, wishes, currencies, prices } = res.locals.models.data;
+  const { data } = res.locals.models;
+  const wishes = data.get('wishes');
 
   if (req.query.user) {
-    const id = users.find(user => user.login === req.query.user)?.id;
+    const id = data.get('users').find(user => user.login === req.query.user)?.id;
 
-    const result = categories
+    const result = data
+      .get('categories')
       ?.map(category => {
         const prepared = wishes
           .filter(wish => wish.userId === id)
@@ -15,8 +17,8 @@ const getAll = async (req, res) => {
           ...category,
           wishes: prepared?.map(wish => ({
             ...wish,
-            currency: currencies?.find(c => c.id === wish.currencyId)?.name,
-            price: prices?.findLast(p => p.wishId === wish.id)?.value,
+            currency: data.get('currencies')?.find(c => c.id === wish.currencyId)?.name,
+            price: data.get('prices')?.findLast(p => p.wishId === wish.id)?.value,
           })),
         };
       })
@@ -30,7 +32,7 @@ const getAll = async (req, res) => {
 };
 
 const get = async (req, res) => {
-  const wish = res.locals.models.data.wishes.find(wish => wish.id === Number(req.params.id));
+  const wish = res.locals.models.data.get('wishes').find(wish => wish.id === Number(req.params.id));
 
   res.status(200).send(wish);
 };
@@ -87,7 +89,7 @@ const update = async (req, res) => {
         id: data.prices.length,
         date: new Date().toLocaleDateString('ru-RU'),
         value: newPrice,
-        wishId: id,
+        wishId: Number(req.params.id),
       });
     }
   });
