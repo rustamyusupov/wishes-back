@@ -20,7 +20,8 @@ export const getAll = async (req: Request, res: Response) => {
           wishes: prepared?.map((wish: Wish) => ({
             ...wish,
             currency: currencies?.find((c: Currency) => c.id === wish.currencyId)?.name,
-            price: prices?.findLast((p: Price) => p.wishId === wish.id)?.value,
+            // TODO: findLast not working, why?
+            price: prices.filter((p: Price) => p.wishId === wish.id).at(-1)?.value,
           })),
         };
       })
@@ -72,9 +73,10 @@ export const add = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
   const { archive, link, name, categoryId, currencyId, sort } = req.body;
+  const wishId = Number(req.params.id);
 
   await res.locals.models.update((data: Data) => {
-    const wish = data.wishes.find((wish: Wish) => wish.id === Number(req.params.id));
+    const wish = data.wishes.find((wish: Wish) => wish.id === wishId);
 
     if (wish) {
       wish.archive = Boolean(archive);
@@ -85,7 +87,8 @@ export const update = async (req: Request, res: Response) => {
       wish.sort = Number(sort) ?? 0;
     }
 
-    const price = data.prices.findLast((price: Price) => price.wishId === Number(req.params.id));
+    // TODO: findLast not working, why?
+    const price = data.prices.filter((price: Price) => price.wishId === wishId).at(-1);
     const newPrice = Number(req.body.price);
 
     if (wish && price && price?.value !== newPrice) {
@@ -93,7 +96,7 @@ export const update = async (req: Request, res: Response) => {
         id: data.prices.length,
         date: new Date().toLocaleDateString('ru-RU'),
         value: newPrice,
-        wishId: wish.id,
+        wishId,
       });
     }
   });

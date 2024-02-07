@@ -1,27 +1,54 @@
 import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 import { User } from '../types';
+import { maxAge, millisecondsInSecond } from './constants';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = res.locals.models.data.users.find((user: User) => user.email === email);
 
-  if (bcrypt.compareSync(password, user?.password)) {
-    req.session.user = user.id;
-    res.status(200).send({ user: user.login });
-    return;
+  if (!email || !password) {
+    return res.status(400).json({
+      message: 'Username or Password not present',
+    });
   }
 
-  res.sendStatus(401);
+  try {
+    const { data } = res.locals.models;
+    const user = data.users.find((user: User) => user.email === email);
+
+    if (!user) {
+      res.status(400).json({
+        message: 'Login not successful',
+        error: 'User not found',
+      });
+    }
+
+    bcrypt.compare(password, user.password).then(result => {
+      if (result) {
+        const token = jwt.sign({ id: user.id, email }, import.meta.env.WISHES_SECRET, {
+          expiresIn: maxAge,
+        });
+
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * millisecondsInSecond });
+        res.status(201).json({
+          message: 'User successfully Logged in',
+          user: user.login,
+        });
+      } else {
+        res.status(400).json({ message: 'Login not successful' });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: 'An error occurred',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
 };
 
 export const logout = async (req: Request, res: Response) => {
-  req.session.destroy(err => {
-    if (err) {
-      console.error(err);
-    }
-  });
-
-  res.sendStatus(200);
+  res.cookie('jwt', '', { maxAge: 1 });
+  res.redirect('/');
 };
