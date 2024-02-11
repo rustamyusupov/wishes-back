@@ -6,3 +6,4 @@ export const routes = express.Router();
 
 routes.post('/login', auth.login);
 routes.get('/logout', auth.logout);
+routes.get('/verify', auth.verify);

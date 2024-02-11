@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { User } from '../types';
 import { maxAge, millisecondsInSecond } from './constants';
@@ -51,4 +51,18 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   res.cookie('jwt', '', { maxAge: 1 });
   res.redirect('/');
+};
+
+export const verify = async (req: Request, res: Response) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    const user: JwtPayload | string = jwt.verify(token, import.meta.env.WISHES_SECRET);
+    const isAuthenticated =
+      typeof user !== 'string' && user?.exp && Date.now() < user.exp * millisecondsInSecond;
+
+    res.status(201).json({ isAuthenticated });
+  } else {
+    res.status(400).json({ isAuthenticated: false });
+  }
 };
