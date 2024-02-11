@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(models);
 app.use('/api', routes);
 
-console.log(import.meta.env.WISHES_SECRET);
+console.log(import.meta.env);
 server.listen(port, () => console.log(`Server is running on port ${port}`));
 
 process.on('unhandledRejection', (err: Error) => {
