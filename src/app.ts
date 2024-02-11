@@ -2,13 +2,14 @@ import cors from 'cors';
 import express from 'express';
 import http from 'http';
 import cookieParser from 'cookie-parser';
+import 'dotenv/config';
 
 import { models } from './middlewares';
 import { routes } from './routes';
 
 export const app = express();
 const server = http.createServer(app);
-const port = import.meta.env.VITE_PORT || '9000';
+const port = process.env.PORT || '9000';
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +18,8 @@ app.use(cookieParser());
 app.use(models);
 app.use('/api', routes);
 
-console.log(import.meta.env);
+console.log(process.env);
+console.log(process.env.WISHES_SECRET);
 server.listen(port, () => console.log(`Server is running on port ${port}`));
 
 process.on('unhandledRejection', (err: Error) => {

@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
 
     bcrypt.compare(password, user.password).then(result => {
       if (result) {
-        const token = jwt.sign({ id: user.id, email }, import.meta.env.WISHES_SECRET, {
+        const token = jwt.sign({ id: user.id, email }, process.env.WISHES_SECRET, {
           expiresIn: maxAge,
         });
 
@@ -57,7 +57,7 @@ export const verify = async (req: Request, res: Response) => {
   const token = req.cookies.jwt;
 
   if (token) {
-    const user: JwtPayload | string = jwt.verify(token, import.meta.env.WISHES_SECRET);
+    const user: JwtPayload | string = jwt.verify(token, process.env.WISHES_SECRET);
     const isAuthenticated =
       typeof user !== 'string' && user?.exp && Date.now() < user.exp * millisecondsInSecond;
 
