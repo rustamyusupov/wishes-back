@@ -18,7 +18,7 @@ export const login = async (req: Request, res: Response) => {
     const { data } = res.locals.models;
     const user = data.users.find((user: User) => user.email === email);
 
-    if (!user) {
+    if (!user || !process.env.WISHES_SECRET) {
       res.status(400).json({
         message: 'Login not successful',
         error: 'User not found',
@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
 
     bcrypt.compare(password, user.password).then(result => {
       if (result) {
-        const token = jwt.sign({ id: user.id, email }, process.env.WISHES_SECRET, {
+        const token = jwt.sign({ id: user.id, email }, process.env.WISHES_SECRET as string, {
           expiresIn: maxAge,
         });
 
