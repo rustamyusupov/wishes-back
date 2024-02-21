@@ -1,5 +1,9 @@
 import type { Request, Response } from 'express';
 
+import { getData } from 'models';
+
 export const getAll = async (req: Request, res: Response) => {
-  res.status(200).send(res.locals.models.data.categories);
+  const data = getData();
+
+  res.status(200).send(data?.categories);
 };

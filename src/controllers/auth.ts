@@ -4,8 +4,10 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { User } from '../types';
 import { maxAge, millisecondsInSecond } from './constants';
+import { getData } from 'models';
 
 export const login = async (req: Request, res: Response) => {
+  const data = getData();
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -15,7 +17,6 @@ export const login = async (req: Request, res: Response) => {
   }
 
   try {
-    const { data } = res.locals.models;
     const user = data.users.find((user: User) => user.email === email);
 
     if (!user || !process.env.WISHES_SECRET) {
@@ -23,6 +24,8 @@ export const login = async (req: Request, res: Response) => {
         message: 'Login not successful',
         error: 'User not found',
       });
+
+      return;
     }
 
     bcrypt.compare(password, user.password).then(result => {
