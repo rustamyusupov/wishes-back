@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 
 import { User, Category, Wish, Currency, Price, CategoryWithWishes } from '../types';
-import { getData, setData } from 'models';
+import { getData, setData } from '../models';
 
 export const getAll = async (req: Request, res: Response) => {
   const data = getData();

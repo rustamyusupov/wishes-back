@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { User } from '../types';
 import { maxAge, millisecondsInSecond } from './constants';
-import { getData } from 'models';
+import { getData } from '../models';
 
 export const login = async (req: Request, res: Response) => {
   const data = getData();
@@ -59,7 +59,7 @@ export const logout = async (req: Request, res: Response) => {
 export const verify = async (req: Request, res: Response) => {
   const token = req.cookies.jwt;
 
-  if (token) {
+  if (token && process.env.WISHES_SECRET) {
     const user: JwtPayload | string = jwt.verify(token, process.env.WISHES_SECRET);
     const isAuthenticated =
       typeof user !== 'string' && user?.exp && Date.now() < user.exp * millisecondsInSecond;

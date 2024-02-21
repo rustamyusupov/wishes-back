@@ -5,7 +5,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.jwt;
   const jwtSecret = process.env.WISHES_SECRET;
 
-  if (token) {
+  if (token && jwtSecret) {
     jwt.verify(token, jwtSecret, (err: unknown) => {
       if (err) {
         return res.status(401).json({ message: 'Not authorized' });
