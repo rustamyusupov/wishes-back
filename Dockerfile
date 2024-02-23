@@ -7,7 +7,7 @@ COPY vite.config.ts ./
 COPY package.json ./
 COPY package-lock.json ./
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 RUN npm run build
 
 EXPOSE 9000
