@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePluginNode } from 'vite-plugin-node';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   base: '/api',
   server: {
     port: 9000,
@@ -11,8 +11,8 @@ export default defineConfig({
     tsconfigPaths(),
     ...VitePluginNode({
       adapter: 'express',
-      appPath: './src/index.ts',
+      appPath: `./src/${command === 'serve' ? 'app.ts' : 'index.ts'}`,
       exportName: 'app',
     }),
   ],
-});
+}));
