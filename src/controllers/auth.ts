@@ -30,9 +30,13 @@ export const login = async (req: Request, res: Response) => {
 
     bcrypt.compare(password, user.password).then(result => {
       if (result) {
-        const token = jwt.sign({ id: user.id, email }, process.env.WISHES_SECRET as string, {
-          expiresIn: maxAge,
-        });
+        const token = jwt.sign(
+          { id: user.id, login: user.login, email },
+          process.env.WISHES_SECRET as string,
+          {
+            expiresIn: maxAge,
+          }
+        );
 
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * millisecondsInSecond });
         res.status(201).json({
@@ -53,7 +57,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   res.cookie('jwt', '', { maxAge: 1 });
-  res.redirect('/');
+  res.status(200).json({ isAuthenticated: false });
 };
 
 export const verify = async (req: Request, res: Response) => {
@@ -62,7 +66,10 @@ export const verify = async (req: Request, res: Response) => {
   if (token && process.env.WISHES_SECRET) {
     const user: JwtPayload | string = jwt.verify(token, process.env.WISHES_SECRET);
     const isAuthenticated =
-      typeof user !== 'string' && user?.exp && Date.now() < user.exp * millisecondsInSecond;
+      typeof user !== 'string' &&
+      user?.exp &&
+      Date.now() < user.exp * millisecondsInSecond &&
+      user.login === req.query.user;
 
     res.status(201).json({ isAuthenticated });
   } else {
