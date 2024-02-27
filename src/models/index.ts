@@ -5,9 +5,7 @@ import fs from 'fs';
 import { Data } from '../types';
 import { defaultData } from './constants';
 
-console.log(import.meta.env.WISHES_DB);
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
-console.log(dirname);
 const dbPath = path.join(dirname, import.meta.env.WISHES_DB);
 
 export const getData = (): Data => {
