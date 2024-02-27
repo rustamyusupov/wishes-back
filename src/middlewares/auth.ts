@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.jwt;
-  const jwtSecret = process.env.WISHES_SECRET;
+  const jwtSecret = import.meta.env.WISHES_SECRET;
 
   if (token && jwtSecret) {
     jwt.verify(token, jwtSecret, (err: unknown) => {

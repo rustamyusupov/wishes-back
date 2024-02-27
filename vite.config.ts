@@ -4,6 +4,7 @@ import { VitePluginNode } from 'vite-plugin-node';
 
 export default defineConfig(({ command }) => ({
   base: '/api',
+  envPrefix: 'WISHES',
   server: {
     port: 9000,
   },

@@ -19,7 +19,7 @@ export const login = async (req: Request, res: Response) => {
   try {
     const user = data.users.find((user: User) => user.email === email);
 
-    if (!user || !process.env.WISHES_SECRET) {
+    if (!user || !import.meta.env.WISHES_SECRET) {
       res.status(400).json({
         message: 'Login not successful',
         error: 'User not found',
@@ -32,7 +32,7 @@ export const login = async (req: Request, res: Response) => {
       if (result) {
         const token = jwt.sign(
           { id: user.id, login: user.login, email },
-          process.env.WISHES_SECRET as string,
+          import.meta.env.WISHES_SECRET as string,
           {
             expiresIn: maxAge,
           }
@@ -63,8 +63,8 @@ export const logout = async (req: Request, res: Response) => {
 export const verify = async (req: Request, res: Response) => {
   const token = req.cookies.jwt;
 
-  if (token && process.env.WISHES_SECRET) {
-    const user: JwtPayload | string = jwt.verify(token, process.env.WISHES_SECRET);
+  if (token && import.meta.env.WISHES_SECRET) {
+    const user: JwtPayload | string = jwt.verify(token, import.meta.env.WISHES_SECRET);
     const isAuthenticated =
       typeof user !== 'string' &&
       user?.exp &&

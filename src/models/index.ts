@@ -6,7 +6,7 @@ import { Data } from '../types';
 import { defaultData } from './constants';
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const dbPath = path.join(dirname, process.env.DB_FILE as string);
+const dbPath = path.join(dirname, import.meta.env.WISHES_DB);
 
 export const getData = (): Data => {
   try {
