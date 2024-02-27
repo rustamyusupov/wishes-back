@@ -7,8 +7,6 @@ import { routes } from './routes';
 
 export const app = express();
 
-console.log(import.meta.env.WISHES_DB);
-
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

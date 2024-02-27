@@ -1,15 +1,12 @@
-import url from 'url';
-import path from 'path';
 import fs from 'fs';
 
 import { Data } from '../types';
 import { defaultData } from './constants';
 
-const dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const dbPath = path.join(dirname, import.meta.env.WISHES_DB);
-
 export const getData = (): Data => {
   try {
+    const dbPath = new URL(import.meta.env.WISHES_DB, import.meta.url).pathname;
+    console.log(dbPath);
     const data = fs.readFileSync(dbPath, 'utf8');
 
     return JSON.parse(data);
@@ -22,6 +19,7 @@ export const getData = (): Data => {
 
 export const setData = (data: Data) => {
   try {
+    const dbPath = new URL(import.meta.env.WISHES_DB, import.meta.url).pathname;
     const jsonData = JSON.stringify(data, null, 2);
 
     fs.writeFileSync(dbPath, jsonData, 'utf8');
