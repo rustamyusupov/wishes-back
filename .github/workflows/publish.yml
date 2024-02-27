@@ -7,6 +7,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  WISHES_DB: ${{ secrets.WISHES_DB }}
+  WISHES_SECRET: ${{ secrets.WISHES_SECRET }}
 
 jobs:
   build-and-push-image:
